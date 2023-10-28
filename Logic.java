@@ -8,13 +8,13 @@ public interface Logic {
 
   boolean isAgendaExistsByDate(String date);
 
-  void createAgenda(Agenda agenda) throws Exception;
+  void createAgenda(String date, Agenda agenda) throws Exception;
 
   List<Agenda> readAllAgendaByDate(String date) throws Exception;
 
-  List<String> readAllDate() throws Exception;
+  List<String> readAllAgendaDate() throws Exception;
 
-  void updateAgenda(Agenda agenda) throws Exception;
+  void updateAgenda(String date, Agenda agenda) throws Exception;
 
   boolean deleteAgendaByDate(String date) throws Exception;
 }
@@ -50,8 +50,8 @@ class LogicImpl implements Logic {
   }
 
   @Override
-  public void createAgenda(Agenda agenda) throws Exception {
-    String filename = agenda.getDate().concat(EXTENSION_AGENDA);
+  public void createAgenda(String date, Agenda agenda) throws Exception {
+    String filename = date.concat(EXTENSION_AGENDA);
     String data = agenda.toString(DELIMITER_AGENDA, DELIMITER_END_OF_AGENDA);
 
     this.repositoryFile.create(DIRECTORY_AGENDA, filename, data);
@@ -67,13 +67,13 @@ class LogicImpl implements Logic {
   }
 
   @Override
-  public List<String> readAllDate() throws Exception {
+  public List<String> readAllAgendaDate() throws Exception {
     return this.repositoryFile.readAllFiles(DIRECTORY_AGENDA);
   }
 
   @Override
-  public void updateAgenda(Agenda agenda) throws Exception {
-    String filename = agenda.getDate().concat(EXTENSION_AGENDA);
+  public void updateAgenda(String date, Agenda agenda) throws Exception {
+    String filename = date.concat(EXTENSION_AGENDA);
     String data = agenda.toString(DELIMITER_AGENDA, DELIMITER_END_OF_AGENDA);
 
     this.repositoryFile.updateAppend(DIRECTORY_AGENDA, filename, data);

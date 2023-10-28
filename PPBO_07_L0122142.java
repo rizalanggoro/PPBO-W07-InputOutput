@@ -1,3 +1,7 @@
+// Nama   : Rizal Dwi Anggoro
+// NIM    : L0122142
+// Github : https://github.com/rizalanggoro/PPBO-W07-InputOutput
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,7 +14,7 @@ public class PPBO_07_L0122142 {
       int option = printMainMenu(scanner, logic);
 
       if (option == 1) createAgenda(scanner, logic);
-      else if (option == 2) showAgenda(scanner, logic);
+      else if (option == 2) readAgenda(scanner, logic);
       else if (option == 3) deleteAgenda(scanner, logic);
       else {
         System.out.println("\nKeluar program...");
@@ -43,7 +47,7 @@ public class PPBO_07_L0122142 {
     }
 
     System.out.println("\nMasukkan judul");
-    String title = Utils.Input.getString(scanner);
+    String content = Utils.Input.getString(scanner);
 
     System.out.println("\nMasukkan waktu");
     String time;
@@ -54,12 +58,12 @@ public class PPBO_07_L0122142 {
     }
 
     try {
-      Agenda agenda = new Agenda(title, date, time);
+      Agenda agenda = new Agenda(time, content);
       if (logic.isAgendaExistsByDate(date)) {
-        logic.updateAgenda(agenda);
+        logic.updateAgenda(date, agenda);
         System.out.println("  Berhasil menambahkan agenda baru...");
       } else {
-        logic.createAgenda(new Agenda(title, date, time));
+        logic.createAgenda(date, agenda);
         System.out.println("  Berhasil membuat agenda baru...");
       }
 
@@ -69,7 +73,7 @@ public class PPBO_07_L0122142 {
     }
   }
 
-  private static void showAgenda(Scanner scanner, Logic logic) {
+  private static void readAgenda(Scanner scanner, Logic logic) {
     System.out.println("\nLihat Agenda\n");
 
     System.out.println("Petunjuk:");
@@ -92,7 +96,7 @@ public class PPBO_07_L0122142 {
 
       List<Agenda> agendas = logic.readAllAgendaByDate(date);
 
-      System.out.printf("\nTanggal: %s\n", date);
+      System.out.printf("\nHari/tanggal: %s\n", Utils.Format.getFormattedDate(date));
       System.out.printf("Anda memiliki %d agenda\n\n", agendas.size());
 
       Utils.Output.printLine("=", 64);
@@ -101,7 +105,7 @@ public class PPBO_07_L0122142 {
 
       int num = 1;
       for (Agenda agenda : agendas) {
-        List<String> agendaTitles = Utils.Output.generateWrappedText(agenda.getTitle(), 48);
+        List<String> agendaTitles = Utils.Output.generateWrappedText(agenda.getContent(), 48);
         boolean isNumberPrinted = false;
         for (String title : agendaTitles) {
           if (isNumberPrinted) System.out.printf(" %3s | %5s | %-48s\n", "", "", title);
@@ -150,19 +154,19 @@ public class PPBO_07_L0122142 {
 
   private static void printAllAgendas(Logic logic) {
     try {
-      final List<String> agendas = logic.readAllDate();
-      if (agendas.isEmpty())
+      final List<String> dates = logic.readAllAgendaDate();
+      if (dates.isEmpty())
         throw new Exception();
 
-      Utils.Output.printLine("=", 32);
-      System.out.printf(" %-3s | %-24s \n", "No", "Tanggal");
-      Utils.Output.printLine("-", 32);
+      Utils.Output.printLine("=", 64);
+      System.out.printf(" %-3s | %-56s \n", "No", "Hari/tanggal");
+      Utils.Output.printLine("-", 64);
 
       int num = 1;
-      for (String agenda : agendas)
-        System.out.printf(" %3d | %-24s \n", num++, agenda);
+      for (String date : dates)
+        System.out.printf(" %3d | %-56s \n", num++, Utils.Format.getFormattedDate(date));
 
-      Utils.Output.printLine("=", 32);
+      Utils.Output.printLine("=", 64);
     } catch (Exception e) {
       System.out.println("[Anda belum memiliki agenda]");
     }

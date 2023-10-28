@@ -1,11 +1,20 @@
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 public class Utils {
   public static class Format {
-    public static String getFilenameTxtFromDate(String date) {
-      return date.replace("/", "-").concat(".txt");
+    public static String getFormattedDate(String dateStr) {
+      try {
+        DateFormat dateFormat = new SimpleDateFormat("EEEE, dd MMMM yyyy");
+        Date date = new SimpleDateFormat("dd-MM-yyyy").parse(dateStr);
+        return dateFormat.format(date);
+      } catch (Exception e) {
+        return dateStr;
+      }
     }
   }
 

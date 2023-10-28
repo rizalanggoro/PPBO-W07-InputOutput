@@ -3,17 +3,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class Agenda {
-  private final String title;
-  private final String date;
   private final String time;
+  private final String content;
 
   public Agenda(
-      String title,
-      String date,
-      String time
+      String time,
+      String content
   ) {
-    this.title = title;
-    this.date = date;
+    this.content = content;
     this.time = time;
   }
 
@@ -22,8 +19,8 @@ public class Agenda {
     final ArrayList<Agenda> result = new ArrayList<>();
 
     for (String agenda : agendas) {
-      String[] data = agenda.split(delimiter, 3);
-      result.add(new Agenda(data[0], data[1], data[2]));
+      String[] data = agenda.split(delimiter, 2);
+      result.add(new Agenda(data[0], data[1]));
     }
 
     result.sort(Comparator.comparing(Agenda::getTime));
@@ -31,12 +28,8 @@ public class Agenda {
     return result;
   }
 
-  public String getTitle() {
-    return this.title;
-  }
-
-  public String getDate() {
-    return this.date;
+  public String getContent() {
+    return this.content;
   }
 
   public String getTime() {
@@ -44,10 +37,8 @@ public class Agenda {
   }
 
   public String toString(String delimiter, String delimiterEOA) {
-    return this.title.concat(delimiter)
-        .concat(this.date)
-        .concat(delimiter)
-        .concat(this.time)
+    return this.time.concat(delimiter)
+        .concat(this.content)
         .concat(delimiterEOA);
   }
 }
