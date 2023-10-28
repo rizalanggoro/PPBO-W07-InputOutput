@@ -70,6 +70,7 @@ public class PPBO_07_L0122142 {
       Utils.Input.enterToContinue(scanner);
     } catch (Exception e) {
       System.out.printf("  Error: %s\n", e.getMessage());
+      Utils.Input.enterToContinue(scanner);
     }
   }
 
@@ -121,6 +122,7 @@ public class PPBO_07_L0122142 {
       Utils.Input.enterToContinue(scanner);
     } catch (Exception e) {
       System.out.printf("  Error: %s\n", e.getMessage());
+      Utils.Input.enterToContinue(scanner);
     }
   }
 
@@ -149,6 +151,7 @@ public class PPBO_07_L0122142 {
       Utils.Input.enterToContinue(scanner);
     } catch (Exception e) {
       System.out.printf("  Error: %s\n", e.getMessage());
+      Utils.Input.enterToContinue(scanner);
     }
   }
 
